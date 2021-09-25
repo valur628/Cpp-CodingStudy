@@ -1,0 +1,76 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int checking(string u)	//올바른 괄호 문자열 검사
+{
+	string w = u;
+	int check = 0;
+
+	//처음부터 안맞을 경우 반복문 없이 반환
+	if (w[0] == ')') return 0;
+
+	for (int i = 0; i < w.length(); i++)
+	{
+		//괄호가 시작되는 '(' 일 경우 1 추가
+		if (w[i] == '(') check++;
+		//괄호가 없어지는 ')' 일 경우 1 감소
+		else check--;
+		//check가 0보다 작아지면 정상적인 괄호가 아니므로 리턴
+		if (check < 0) return 0;
+	}
+	return 1;
+}
+
+string solution(string p)
+{
+	string w = p;
+	string u = "", v = "";
+	int left = 0, right = 0;
+
+	//문자열이 비었으면 탈출
+	if (w == "") return w;
+	//균형잡힌 괄호 문자열인지 확인하기 위한 부분
+	for (int i = 0; i < w.length(); i++)
+	{
+		u += w[i];
+		w[i] == '(' ? left++ : right++;
+		//v(u의 뒷부분)를 w로 부터 분리하는 부분
+		if (left == right)
+		{
+			//u=처음부터 지금값까지, v=다음값부터 끝까지
+			u = w.substr(0, i + 1);
+			v = w.substr(i + 1);
+			break;
+		}
+	}
+
+	//올바른 문자열이면 v 반복후, answer랑 합처서 반환함(반대로 하면 틀림)
+	if (checking(u) == 1) return u + solution(v);
+
+	//아니라면 문자열을 붙이고 분할하는 재귀 과정을 통해 정상화시키는 부분
+	else
+	{
+		//빈 것에 (추가
+		string answer = "(";
+		//문자열 v에 대해 재귀 후, 그 전체 결과와) 를 이어 붙임
+		answer += solution(v) + ")";
+		//첫번째와 마지막 문자 제거 
+		u = u.substr(1, u.length() - 2);
+		//괄호 방향을 뒤집는 과정
+		for (int i = 0; i < u.length(); i++)
+			if (u[i] == '(') answer += ')';
+			else answer += '(';
+		return answer;
+	}
+}
+
+int main()
+{
+	//string s;
+	//cin >> s;
+	//cout << solution(s);
+	cout << solution("(()())()") << "\n";
+	cout << solution(")(") << "\n";
+	cout << solution("()))((()") << "\n";
+}

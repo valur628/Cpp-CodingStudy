@@ -1,0 +1,52 @@
+#include <iostream>
+#include <algorithm>
+#include <stack>
+using namespace std;
+
+int main()
+{
+    for(int k = 0 ; k < 10 ; k++)
+    {
+        string str;
+        int n = 0;
+        int effective = 1;
+        stack<char> s;
+
+        cin >> n;
+        cin >> str;
+        for(int i = 0 ; i < n ; i++)
+        {
+            if (effective == 0)
+                continue;
+            if(str[i] == '(' || str[i] == '[' || str[i] == '{' || str[i] == '<')
+                s.push(str[i]);
+            else
+            {
+                char pop = s.top();
+                s.pop();
+                if (str[i] == ')')
+                {
+                    if (pop != '(')
+                        effective = 0;
+                }
+                else if (str[i] == ']')
+                {
+                    if (pop != '[')
+                        effective = 0;
+                }
+                else if (str[i] == '}')
+                {
+                    if (pop != '{')
+                        effective = 0;
+                }
+                else if (str[i] == '>')
+                {
+                    if (pop != '<')
+                        effective = 0;
+                }
+            }
+        }
+        cout << "\n" << "#" << k+1 << " " << effective << "\n";
+    }
+    return 0;
+}

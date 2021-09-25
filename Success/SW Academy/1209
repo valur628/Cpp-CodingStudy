@@ -1,0 +1,44 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+    for(int z = 1 ; z <= 10 ; z++)
+    {
+        int n;
+        int p[4] = {0};
+        int pmax[4] = {0};
+        int arr[102][102] = {0};
+        cin >> n;
+        for(int i = 1 ; i <= 100 ; i++)
+        {
+            for(int j = 1; j <= 100 ; j++)
+            {
+                cin >> arr[j][i];
+            }
+        }
+        for(int i = 1 ; i <= 100 ; i++)
+        {
+            p[0] = 0, p[1] = 0;
+            for(int j = 1; j <= 100 ; j++)
+            {
+                p[0]+=arr[j][i];
+                if(pmax[0]<=p[0])
+                pmax[0] = p[0];
+                p[1]+=arr[i][j];
+                if(pmax[1]<=p[1])
+                pmax[1] = p[1];
+            }
+            p[2]+=arr[i][i];
+            if(pmax[2]<=p[2])
+                pmax[2]= p[2];
+            p[3]+=arr[101-i][101-i];
+            if(pmax[3]<=p[3])
+                pmax[3] = p[3];
+        }
+        sort(pmax, pmax+4);
+        cout << "\n#" << z << " " << pmax[3] << "\n";
+    }
+    return 0;
+}

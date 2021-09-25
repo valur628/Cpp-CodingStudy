@@ -1,0 +1,39 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+
+struct s{
+    int a;
+    int b;
+};
+
+queue<s> q;
+    
+void top(int len, int first, int mid, int end)
+{
+    if(len == 1)
+    {
+        q.push({first, end});
+    }
+    else
+    {
+        top(len - 1, first, end, mid);
+        q.push({first, end});
+        top(len - 1, mid, first, end);
+    }
+}
+
+int main(void)
+{
+    int n = 0;
+    cin >> n;
+    top(n, 1, 2, 3);
+
+    cout << q.size() << "\n";
+    while(q.empty()!=true)
+    {
+        cout << q.front().a << " " << q.front().b << "\n";
+        q.pop();
+    }
+    return 0;
+}

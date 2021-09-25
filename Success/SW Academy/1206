@@ -1,0 +1,56 @@
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+int main()
+{
+  for(int i = 0 ; i < 10 ; i++)
+  {
+    int sums = 0;
+    int n = 0;
+    int x[1000] = {-1};
+    vector<int> v;
+    cin >> n;
+    for(int j = 0 ; j < n ; j++) {cin >> x[j];}
+    for(int j = 0 ; j < n ; j++)
+    {
+      if(j<2)
+      {
+        v.push_back(x[j-2]);
+        v.push_back(x[j-1]);
+        sort(v.begin(), v.end());
+        if(x[j] >= v.back())
+        {
+          sums += (x[j]-v.back());
+        }
+      }
+      else if(n-j < 2)
+      {
+        v.push_back(x[j+1]);
+        v.push_back(x[j+2]);
+        sort(v.begin(), v.end());
+        if(x[j] >= v.back())
+        {
+          sums += (x[j]-v.back());
+        }
+      }
+      else
+      {
+        v.push_back(x[j-2]);
+        v.push_back(x[j-1]);
+        v.push_back(x[j+1]);
+        v.push_back(x[j+2]);
+        sort(v.begin(), v.end());
+        if(x[j] >= v.back())
+        {
+          sums += (x[j]-v.back());
+        }
+      }
+      while(!v.empty())
+        v.pop_back();
+    }
+    cout << "\n" << "#" << i+1 << " " << sums << "\n";
+  }
+  return 0;
+}

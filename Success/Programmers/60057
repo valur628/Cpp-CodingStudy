@@ -1,0 +1,56 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+//문자열을 특정위치에서 특정개수만큼 분할해 반환하는 함수, 근데 찾아보니 substr이라고 있음
+string cut_string(string s, int start, int size)
+{
+  string tmp = "";
+  for(int i = start;i<start+size;i++)
+    tmp+=s[i];
+  return tmp;
+}
+
+int solution(string s) {
+    int answer = 1001;
+    int s_length = s.length();
+    
+    //문자열 한 개는 계산할 수 없으므로, 별도로 처리
+    if(s_length == 1) return 1;
+
+    //앞의 몇 개를 선택하는지에 대해 결정하는 반복문
+    for(int i = 1;i<=s_length/2;i++)
+    {
+        string tem_ans = "";
+        string s_div = cut_string(s,0,i);
+        int count = 1;
+
+        //j부터 s.length까지, s_div을 제외한 부분부터 계산하는 반복문
+        for (int j = i;j<=s_length;j+=i)
+          //검사하고자 하는 문자열끼리 동일하면 count에 1추가
+          if(s_div == cut_string(s, j, i))
+            count++;
+          //문자 반복이 1회면 문자만, 2회 이상이면 숫자와 문자 둘 다
+          else {
+            if(count == 1) tem_ans += s_div;
+            else tem_ans += (to_string(count) + s_div);
+          //초기화 부분
+          s_div = cut_string(s, j, i);
+          count = 1;
+        }
+
+        //코드 구조상 s.length와 i가 제대로 나누어지지 않으면 나머지가 생기게 됨, 그걸 해결하는 부분
+        if(s_length%i != 0) tem_ans += cut_string(s, s_length/i*i, s_length-(s_length/i*i));
+
+        //지금까지 만들어진 문자열을 개수로 변환해서 이전 것과 비교 후 더 작은 값을 answer에 넣음
+        if(answer > tem_ans.length()) answer = tem_ans.length();
+    }
+    return answer;
+}
+
+int main() {
+  string s;
+  cin >> s;
+  cout << solution(s);
+}

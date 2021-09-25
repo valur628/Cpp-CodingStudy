@@ -1,0 +1,57 @@
+#include <iostream>
+#include <stdio.h>
+#include <string.h>
+using namespace std;
+int answer = 0;
+int map[17][17] = {0};
+int check[17][17] = {0};
+int xr[4] = {0, 1, 0, -1};
+int xc[4] = {1, 0, -1, 0};
+
+void dfs(int x, int y)
+{
+    check[x][y] = 1;
+    if(map[x][y] == 3)
+    {
+        answer = 1;
+        return;
+    }
+    for(int i = 0;i<4;i++)
+    {
+        int xx = x + xr[i];
+        int yy = y + xc[i];
+        if(xx < 16 && yy < 16 && check[xx][yy] == 0 && (map[xx][yy] == 0||map[xx][yy] == 3))
+        {
+            dfs(xx, yy);
+        }
+    }
+}
+
+int main(void)
+{
+    for (int z = 1;z<=10;z++)
+    {
+        int n = 0, startX = 0, startY = 0;
+        answer = 0;
+
+        cin >> n;
+        for (int i = 0;i<16;i++)
+        {
+            for (int j = 0;j<16;j++)
+            {
+                scanf("%1d", &map[i][j]);
+                if(map[i][j] == 2)
+                {
+                    startX = i;
+                    startY = j;
+                }
+            }
+        }
+        dfs(startX, startY);
+        cout << "#" << z << " " << answer <<"\n";
+        
+        memset(map, 0, sizeof(map));
+        memset(check, 0, sizeof(check));
+    }
+    return 0;
+}

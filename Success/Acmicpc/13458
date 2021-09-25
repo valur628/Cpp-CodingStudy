@@ -1,0 +1,30 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+int main() {
+  
+  //n값 받기
+  int n;
+  cin >> n;
+
+  //a값 받기
+  int *a = new int[n];
+  for(int i = 0;i<n;i++) cin >> a[i];
+
+  //b, c값 받기
+  int b, c;
+  cin >> b >> c;
+
+  //총감독관 수 추가
+  long add = n;
+
+  //부감독관 수 계산 후 추가, 삼항 연산자 사용 이유는 a[i]가 b보다 낮을 때 -값을 막기 위해서
+  for(int i = 0;i<n;i++)
+    add += ceil(((double)(a[i] - b >= 0 ? a[i] - b : 0) / c));
+  
+  cout << add;
+  delete[] a;
+  return 0;
+}

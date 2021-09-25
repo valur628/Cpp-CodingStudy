@@ -1,0 +1,38 @@
+#include<iostream>
+using namespace std;
+
+int map[100][100] = {0};
+int visit[100] = {0};
+int ans = 0;
+int N, M;
+
+void dfs(int d)
+{
+    ans++;
+    visit[d] = 1;
+    for(int i = 0;i<N;i++)
+    {
+        if(map[d][i] && !visit[i])
+        {
+            dfs(i);
+        }
+    }
+}
+
+int main(void)
+{
+    int x, y;
+    
+    cin >> N;
+    cin >> M;
+
+    for(int i = 0;i<M;i++)
+    {
+        cin >> x >> y;
+        map[x][y] = 1;
+        map[y][x] = 1;
+    }
+    dfs(1);
+    ans--;
+    cout << ans;
+}

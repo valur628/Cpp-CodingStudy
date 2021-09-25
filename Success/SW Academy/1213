@@ -1,0 +1,35 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+    for(int z = 1 ; z <= 10 ; z++)
+    {
+        int n = 0;
+        int counts = 0;
+        string all_Str, check_Str;
+
+        cin >> n;
+        cin >> check_Str;
+        cin >> all_Str;
+
+        for(int i = 0 ; i < all_Str.size() ; i++)
+        {
+            int k = 0;
+            for(int j = 0 ; j < check_Str.size() ; j++)
+            {
+                if(check_Str[j] != all_Str[i+k])
+                    break;
+                if(check_Str.size()-1 == j)
+                {
+                    counts++;
+                    i+=k;
+                }
+                k++;
+            }
+        }
+        cout << "\n#" << z << " " << counts << "\n";
+    }
+    return 0;
+}
