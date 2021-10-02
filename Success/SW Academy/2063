@@ -1,0 +1,17 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+int main(int argc, char ** argv) {
+  int test_case = 0;
+  int T = 0;
+  int num[200];
+  cin >> T;
+  for (test_case = 0; test_case < T; ++test_case) {
+    cin >> num[test_case];
+  }
+  sort(num, num+T);
+  cout << num[T/2];
+  return 0;
+}
